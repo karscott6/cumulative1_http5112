@@ -1,0 +1,24 @@
+﻿@model IEnumerable<CumulativeProject1.Models.Teacher>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2 class="viewhead">Teacher Database</h2>
+<form action="/Teacher/List" method="GET">
+    <input type="text" name="TeacherSearchKey" autocomplete="off">
+    <input type="submit" value="Search">
+</form>
+<p>Search for Teacher by: <em>Name, Salary or Hire Date</em></p>
+
+<h3 class="subhead">Teacher List</h3>
+<div id="teacherList">
+    @{
+        foreach (var Teacher in Model)
+        {
+            <div class="listitem row">
+                <div class="col-md-12"><a class="navlink" href="/Teacher/Show/@Teacher.TeacherId">@Teacher.TeacherFName @Teacher.TeacherLName</a></div>
+            </div>
+        }
+    }
+</div>

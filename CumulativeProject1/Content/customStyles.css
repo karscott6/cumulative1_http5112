@@ -1,0 +1,57 @@
+﻿/*Custom CSS Styling for Initiative 2*/
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Source+Code+Pro:wght@400;600&display=swap');
+
+body {
+    font-family: "Manrope", sans-serif;
+    font-size: 1em;
+}
+
+h1 {
+    font-family: "Source Code Pro", monospace;
+    font-size: 2em;
+}
+
+div.listitem {
+    padding: 2px;
+}
+h2.viewhead {
+    padding-bottom: 25px;
+}
+
+h3.subhead {
+    padding-top: 25px;
+}
+
+a.nav-link {
+    color: black;
+}
+
+a.navlink {
+    color: black;
+}
+
+a:hover.nav-link {
+    color: crimson;
+}
+
+a:focus.nav-link {
+    color: crimson;
+    text-decoration: underline;
+}
+
+a:hover.navlink {
+    color: crimson;
+}
+
+ul.studentShow {
+    list-style-type: none;
+}
+
+ul.teacherShow {
+    list-style-type: none;
+}
+
+span.objectName {
+    color: crimson;
+}
