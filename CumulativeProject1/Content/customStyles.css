@@ -27,6 +27,14 @@ a.nav-link {
     color: black;
 }
 
+a.dellink {
+    color:red;
+}
+
+a:hover.dellink {
+    text-decoration: underline;
+}
+
 a.navlink {
     color: black;
 }
