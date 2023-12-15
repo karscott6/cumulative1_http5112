@@ -108,8 +108,26 @@ namespace CumulativeProject1.Controllers
             return View(NewTeacher);
         }
 
+        //GET : /Teacher/Edit/{id}
+        public ActionResult Edit(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.FindTeacher(id);
 
-        //POST : /Author/Delete/{id}
+            return View(SelectedTeacher);
+        }
+
+        //POST : /Teacher/Update/{id}
+        [System.Web.Http.HttpPost]
+        public ActionResult Update(int id, Teacher UpdatedTeacher)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            UpdatedTeacher.TeacherId = id;
+            controller.UpdateTeacher(UpdatedTeacher);
+            return RedirectToAction("Show/" + id);
+        }
+
+        //POST : /Teacher/Delete/{id}
         [System.Web.Http.HttpPost]
         public ActionResult Delete(int id)
         {

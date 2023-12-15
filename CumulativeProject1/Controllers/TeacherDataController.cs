@@ -58,9 +58,12 @@ namespace CumulativeProject1.Controllers
             {
                 //Collect Teacher Information
                 int TeacherId = Convert.ToInt32(ResultSet["teacherid"]);
-                string TeacherFName = (string)ResultSet["teacherfname"];
-                string TeacherLName = (string)ResultSet["teacherlname"];
-                string EmployeeNumber = ResultSet["employeenumber"].ToString();
+                object TeacherFNameObject = ResultSet["teacherfname"];
+                string TeacherFName = (TeacherFNameObject != DBNull.Value) ? TeacherFNameObject.ToString() : null; // CHECKS IF OBJECT IS NULL; IF IT IS - WRITES null
+                object TeacherLNameObject = ResultSet["teacherlname"];
+                string TeacherLName = (TeacherLNameObject != DBNull.Value) ? TeacherLNameObject.ToString() : null; // ? is short hand for IF ELSE statement with true/false conditions seperated by :
+                object EmployeeNumberObject = ResultSet["employeenumber"];
+                string EmployeeNumber = (EmployeeNumberObject != DBNull.Value) ? EmployeeNumberObject.ToString() : null;
                 DateTime HireDate = (DateTime)ResultSet["hiredate"];
                 decimal Salary = (decimal)ResultSet["salary"];
 
@@ -116,9 +119,12 @@ namespace CumulativeProject1.Controllers
             {
                 //Collect Teacher Information
                 int TeacherId = Convert.ToInt32(ResultSet["teacherid"]);
-                string TeacherFName = (string)ResultSet["teacherfname"];
-                string TeacherLName = (string)ResultSet["teacherlname"];
-                string EmployeeNumber = ResultSet["employeenumber"].ToString();
+                object TeacherFNameObject = ResultSet["teacherfname"];
+                string TeacherFName = (TeacherFNameObject != DBNull.Value) ? TeacherFNameObject.ToString() : null; // CHECKS IF OBJECT IS NULL; IF IT IS - WRITES null
+                object TeacherLNameObject = ResultSet["teacherlname"];
+                string TeacherLName = (TeacherLNameObject != DBNull.Value) ? TeacherLNameObject.ToString() : null; // ? is short hand for IF ELSE statement with true/false conditions seperated by :
+                object EmployeeNumberObject = ResultSet["employeenumber"];
+                string EmployeeNumber = (EmployeeNumberObject != DBNull.Value) ? EmployeeNumberObject.ToString() : null;
                 DateTime HireDate = (DateTime)ResultSet["hiredate"];
                 decimal Salary = (decimal)ResultSet["salary"];
 
@@ -208,6 +214,53 @@ namespace CumulativeProject1.Controllers
 
 
         }
+        ///<summary>
+        /// Add a teacher to the db
+        /// </summary>
+        /// <param name="NewTeacher">Object that links to teacher db</param>
+        /// <example>
+        /// POST api/TeacherData/New
+        /// FORM DATA / POST DATA / REQUEST BODY 
+        /// {
+        ///	"TeacherFName":"Kyle",
+        ///	"TeacherLName":"Scott",
+        ///	"TeacherEmployeeNumber":"A1234",
+        ///	"TeacherHireDate":Now()",
+        ///	"TeacherSalary":"50.00"
+        /// }
+        /// </example>
+        /// 
+        [System.Web.Http.HttpPost]
+
+        public void UpdateTeacher([FromBody] Teacher UpdateTeacher)
+        {
+
+            //Create a MySQL Connection to my mySchoolDb
+            MySqlConnection Connection = School.AccessDatabase();
+
+            Debug.WriteLine(UpdateTeacher.TeacherFName);
+
+            //Open the connection between the web server and database
+            Connection.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand Command = Connection.CreateCommand();
+
+            //SQL QUERY
+            Command.CommandText = "UPDATE teachers SET teacherfname = @TeacherFName, teacherlname = @TeacherLName, employeenumber = @EmployeeNumber, salary = @Salary WHERE teacherid=@TeacherId";
+            Command.Parameters.AddWithValue("@TeacherId", UpdateTeacher.TeacherId);
+            Command.Parameters.AddWithValue("@TeacherFname", UpdateTeacher.TeacherFName);
+            Command.Parameters.AddWithValue("@TeacherLName", UpdateTeacher.TeacherLName);
+            Command.Parameters.AddWithValue("@EmployeeNumber", UpdateTeacher.EmployeeNumber);
+            Command.Parameters.AddWithValue("@Salary", UpdateTeacher.Salary);
+            Command.Prepare();
+
+            Command.ExecuteNonQuery();
+
+            Connection.Close();
+        }
+
+
 
     }
 }
